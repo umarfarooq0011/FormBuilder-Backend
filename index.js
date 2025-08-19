@@ -28,6 +28,7 @@ app.use(helmet({
     directives:{
        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
        "connect-src": ["'self'", "https://generativelanguage.googleapis.com"],
+       "img-src": ["'self'", "data:", "https://www.transparenttextures.com"],
     }
   }
 }));

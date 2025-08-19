@@ -232,8 +232,18 @@ export const getSubmissions = async(req, res, next) => {
             return res.status(403).json({ message: 'Forbidden: You cannot view these submissions.' });
         }
 
-         const subs = await Submission.find({ form: req.params.id }).sort({ createdAt: -1 });
-    res.json({ submissions: subs });
+    // Pagination params (server-side)
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
+    const skip = (page - 1) * limit;
+
+    const total = await Submission.countDocuments({ form: req.params.id });
+    const subs = await Submission.find({ form: req.params.id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.json({ submissions: subs, total, page, limit, totalPages: Math.ceil(total / limit) });
     } catch (error) {
         console.error('Error fetching submissions:', error);
         res.status(500).json({ message: 'Internal Server Error' });
