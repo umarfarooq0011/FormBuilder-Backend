@@ -7,10 +7,6 @@ node_modules/
 .env
 
 
-# Build output
-dist/
-build/
-
 yarn-debug.log*
 yarn-error.log*
 
