@@ -61,10 +61,6 @@ export const deleteForm = async (req, res, next) => {
     // Then, delete the form itself
     await Form.findByIdAndDelete(formId);
     
-    // Notify all clients that the forms list has changed
-    
-    req.io.emit('forms_updated');
-
     res.status(200).json({ message: 'Form and all its submissions deleted successfully' });
   } catch (error) {
     console.error('Error deleting form:', error);
@@ -92,9 +88,7 @@ export const createForm = async(req, res, next) => {
             createdBy: createdBy || 'Anonymous', // Add this
             ownerId: ownerId
          });
-         // Notify all clients that the forms list has changed
-        req.io.emit('forms_updated');
-
+        
          res.status(201).json({ id: form._id, form });
 
         

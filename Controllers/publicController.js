@@ -24,7 +24,7 @@ export const getPublicForm = async (req, res, next) => {
         res.status(500).json({ message: 'Internal Server Error' });
         next(error);
     }
-};
+};  
 
 
 export const validateSubmission = [
@@ -80,8 +80,7 @@ export const postSubmission = async (req, res, next) => {
           },
         });
 
-         // Notify all clients that the forms list has changed (submission count updated)
-        req.io.emit('forms_updated');
+       
 
         res.status(201).json({ message: 'Submission received', submissionId: sub._id });
   } catch (error) {
