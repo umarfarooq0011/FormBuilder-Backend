@@ -40,8 +40,7 @@ app.use(morgan('dev'));
 
 const submitLimiter = rateLimit({ windowMs: 60 * 1000, max: 30 });
 
-app.use('/api/forms', formRoutes);
-app.use('/api/public', submitLimiter, publicRoutes);
+
 
 app.use((err, req, res, next) => {
   console.error(err);
@@ -51,6 +50,8 @@ app.use((err, req, res, next) => {
 
 // Setup for production - serve frontend
 app.use(express.static(path.resolve(__dirname, "dist")));
+app.use('/api/forms', formRoutes);
+app.use('/api/public', submitLimiter, publicRoutes);
 
 app.get("/*", (_, res) => {
   res.sendFile(path.resolve(__dirname, "dist", "index.html"));
