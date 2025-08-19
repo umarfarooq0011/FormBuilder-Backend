@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 });
 
 
-const server = app.listen(PORT, async () => {
+ app.listen(PORT, async () => {
     await connectDB();
     console.log(`SERVER is running on http://localhost:${PORT}`);
 });
