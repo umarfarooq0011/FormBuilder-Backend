@@ -10,21 +10,16 @@ import publicRoutes from './Routes/publicRoutes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
-
-
 dotenv.config();
 const PORT = process.env.PORT || 5000;
+
+// Connect to the database immediately
+connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-
-
-
-
-
 
 app.use(express.json({ limit: '1mb' }));
 app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
@@ -32,13 +27,10 @@ app.use(morgan('dev'));
 
 const submitLimiter = rateLimit({ windowMs: 60 * 1000, max: 30 });
 
-
-
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: 'Internal Server Error' });
 });
-
 
 // Setup for production - serve frontend
 app.use(express.static(path.resolve(__dirname, "dist")));
@@ -53,9 +45,11 @@ app.get('/', (req, res) => {
     res.send("FORM BUILDER PROJECT");
 });
 
-
- app.listen(PORT, async () => {
-    await connectDB();
+// For local development, you can still use app.listen
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
     console.log(`SERVER is running on http://localhost:${PORT}`);
-});
+  });
+}
 
+export default app;
