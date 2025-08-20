@@ -33,13 +33,13 @@ app.use((err, req, res, next) => {
 });
 
 // Setup for production - serve frontend
-// app.use(express.static(path.resolve(__dirname, "dist")));
+app.use(express.static(path.resolve(__dirname, "dist")));
 app.use('/api/forms', formRoutes);
 app.use('/api/public', submitLimiter, publicRoutes);
 
-// app.get("/*", (_, res) => {
-//   res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-// });
+app.get("/*", (_, res) => {
+  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+});
 
 app.get('/', (req, res) => {
     res.send("FORM BUILDER PROJECT");
