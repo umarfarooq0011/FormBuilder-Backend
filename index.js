@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB.js";
-import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
 import rateLimit from 'express-rate-limit';
@@ -23,15 +22,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 
-app.use(helmet({
-  contentSecurityPolicy:{
-    directives:{
-       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-       "connect-src": ["'self'", "https://generativelanguage.googleapis.com"],
-       "img-src": ["'self'", "data:", "https://www.transparenttextures.com"],
-    }
-  }
-}));
+
 
 
 
