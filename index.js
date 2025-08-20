@@ -21,6 +21,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// This tells Express to trust the X-Forwarded-For header from Vercel.
+app.set('trust proxy', 1);
+
 app.use(express.json({ limit: '1mb' }));
 app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
 app.use(morgan('dev'));
