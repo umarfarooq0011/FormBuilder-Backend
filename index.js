@@ -25,7 +25,11 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '1mb' }));
+
+
 app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+
+
 app.use(morgan('dev'));
 
 const submitLimiter = rateLimit({ windowMs: 60 * 1000, max: 30 });

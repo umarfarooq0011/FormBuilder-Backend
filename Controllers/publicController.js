@@ -65,7 +65,7 @@ export const postSubmission = async (req, res, next) => {
         // 1. Get the form from the request object (passed from middleware)
         const form = req.form;
 
-        // 2. REMOVE the old validation loop. It's now handled by the middleware.
+        
         
         // Increment submissions count
         form.submissions += 1;
